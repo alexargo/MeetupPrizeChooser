@@ -1,0 +1,599 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A5F74B753FD34A22A6A55E2B /* libPods-MeetupPrizeChooser.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CCB816950854EE8A3AB81AC /* libPods-MeetupPrizeChooser.a */; };
+		B56935E172294AB199CBC1BF /* libPods-MeetupPrizeChooserTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9225B054DBE24F5BBA2EF3F8 /* libPods-MeetupPrizeChooserTests.a */; };
+		FA770C83188DB7F7005ED309 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA770C82188DB7F7005ED309 /* Foundation.framework */; };
+		FA770C85188DB7F7005ED309 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA770C84188DB7F7005ED309 /* CoreGraphics.framework */; };
+		FA770C87188DB7F7005ED309 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA770C86188DB7F7005ED309 /* UIKit.framework */; };
+		FA770C8D188DB7F7005ED309 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA770C8B188DB7F7005ED309 /* InfoPlist.strings */; };
+		FA770C8F188DB7F7005ED309 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FA770C8E188DB7F7005ED309 /* main.m */; };
+		FA770C93188DB7F7005ED309 /* AKAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FA770C92188DB7F7005ED309 /* AKAAppDelegate.m */; };
+		FA770C96188DB7F7005ED309 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA770C94188DB7F7005ED309 /* Main.storyboard */; };
+		FA770C99188DB7F7005ED309 /* AKAMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA770C98188DB7F7005ED309 /* AKAMasterViewController.m */; };
+		FA770C9C188DB7F7005ED309 /* AKADetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA770C9B188DB7F7005ED309 /* AKADetailViewController.m */; };
+		FA770C9E188DB7F7005ED309 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA770C9D188DB7F7005ED309 /* Images.xcassets */; };
+		FA770CA5188DB7F7005ED309 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA770CA4188DB7F7005ED309 /* XCTest.framework */; };
+		FA770CA6188DB7F7005ED309 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA770C82188DB7F7005ED309 /* Foundation.framework */; };
+		FA770CA7188DB7F7005ED309 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA770C86188DB7F7005ED309 /* UIKit.framework */; };
+		FA770CAF188DB7F7005ED309 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA770CAD188DB7F7005ED309 /* InfoPlist.strings */; };
+		FA770CB1188DB7F7005ED309 /* MeetupPrizeChooserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FA770CB0188DB7F7005ED309 /* MeetupPrizeChooserTests.m */; };
+		FA952F7B188DB8A300446BC9 /* AKAMeetupRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FA952F7A188DB8A300446BC9 /* AKAMeetupRequestManager.m */; };
+		FA952F7C188DB8A300446BC9 /* AKAMeetupRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FA952F7A188DB8A300446BC9 /* AKAMeetupRequestManager.m */; };
+		FA952F81188DFF8A00446BC9 /* AKAMeetupEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FA952F80188DFF8A00446BC9 /* AKAMeetupEventCell.m */; };
+		FA952F82188DFF8A00446BC9 /* AKAMeetupEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FA952F80188DFF8A00446BC9 /* AKAMeetupEventCell.m */; };
+		FA952F85188E1DA200446BC9 /* AKARSVPCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FA952F84188E1DA200446BC9 /* AKARSVPCell.m */; };
+		FA952F86188E1DA200446BC9 /* AKARSVPCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FA952F84188E1DA200446BC9 /* AKARSVPCell.m */; };
+		FAFEA0DA1912E7A9001BF8A6 /* AKAMeetupAPIKeyProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = FAFEA0D91912E7A9001BF8A6 /* AKAMeetupAPIKeyProvider.m */; };
+		FAFEA0DB1912E7A9001BF8A6 /* AKAMeetupAPIKeyProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = FAFEA0D91912E7A9001BF8A6 /* AKAMeetupAPIKeyProvider.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		FA770CA8188DB7F7005ED309 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FA770C77188DB7F7005ED309 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FA770C7E188DB7F7005ED309;
+			remoteInfo = MeetupPrizeChooser;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		7261EE82D08A48A2BA12981B /* Pods-MeetupPrizeChooserTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeetupPrizeChooserTests.xcconfig"; path = "Pods/Pods-MeetupPrizeChooserTests.xcconfig"; sourceTree = "<group>"; };
+		8CCB816950854EE8A3AB81AC /* libPods-MeetupPrizeChooser.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MeetupPrizeChooser.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		90F9E019F082449A9D427B10 /* Pods-MeetupPrizeChooser.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeetupPrizeChooser.xcconfig"; path = "Pods/Pods-MeetupPrizeChooser.xcconfig"; sourceTree = "<group>"; };
+		9225B054DBE24F5BBA2EF3F8 /* libPods-MeetupPrizeChooserTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MeetupPrizeChooserTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA770C7F188DB7F7005ED309 /* MeetupPrizeChooser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeetupPrizeChooser.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA770C82188DB7F7005ED309 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		FA770C84188DB7F7005ED309 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		FA770C86188DB7F7005ED309 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		FA770C8A188DB7F7005ED309 /* MeetupPrizeChooser-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MeetupPrizeChooser-Info.plist"; sourceTree = "<group>"; };
+		FA770C8C188DB7F7005ED309 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FA770C8E188DB7F7005ED309 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		FA770C90188DB7F7005ED309 /* MeetupPrizeChooser-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MeetupPrizeChooser-Prefix.pch"; sourceTree = "<group>"; };
+		FA770C91188DB7F7005ED309 /* AKAAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AKAAppDelegate.h; sourceTree = "<group>"; };
+		FA770C92188DB7F7005ED309 /* AKAAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AKAAppDelegate.m; sourceTree = "<group>"; };
+		FA770C95188DB7F7005ED309 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		FA770C97188DB7F7005ED309 /* AKAMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AKAMasterViewController.h; sourceTree = "<group>"; };
+		FA770C98188DB7F7005ED309 /* AKAMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AKAMasterViewController.m; sourceTree = "<group>"; };
+		FA770C9A188DB7F7005ED309 /* AKADetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AKADetailViewController.h; sourceTree = "<group>"; };
+		FA770C9B188DB7F7005ED309 /* AKADetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AKADetailViewController.m; sourceTree = "<group>"; };
+		FA770C9D188DB7F7005ED309 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		FA770CA3188DB7F7005ED309 /* MeetupPrizeChooserTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MeetupPrizeChooserTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA770CA4188DB7F7005ED309 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		FA770CAC188DB7F7005ED309 /* MeetupPrizeChooserTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MeetupPrizeChooserTests-Info.plist"; sourceTree = "<group>"; };
+		FA770CAE188DB7F7005ED309 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FA770CB0188DB7F7005ED309 /* MeetupPrizeChooserTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MeetupPrizeChooserTests.m; sourceTree = "<group>"; };
+		FA952F79188DB8A300446BC9 /* AKAMeetupRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKAMeetupRequestManager.h; sourceTree = "<group>"; };
+		FA952F7A188DB8A300446BC9 /* AKAMeetupRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKAMeetupRequestManager.m; sourceTree = "<group>"; };
+		FA952F7F188DFF8A00446BC9 /* AKAMeetupEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKAMeetupEventCell.h; sourceTree = "<group>"; };
+		FA952F80188DFF8A00446BC9 /* AKAMeetupEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKAMeetupEventCell.m; sourceTree = "<group>"; };
+		FA952F83188E1DA200446BC9 /* AKARSVPCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKARSVPCell.h; sourceTree = "<group>"; };
+		FA952F84188E1DA200446BC9 /* AKARSVPCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKARSVPCell.m; sourceTree = "<group>"; };
+		FAFEA0D81912E7A9001BF8A6 /* AKAMeetupAPIKeyProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKAMeetupAPIKeyProvider.h; sourceTree = "<group>"; };
+		FAFEA0D91912E7A9001BF8A6 /* AKAMeetupAPIKeyProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKAMeetupAPIKeyProvider.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FA770C7C188DB7F7005ED309 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA770C85188DB7F7005ED309 /* CoreGraphics.framework in Frameworks */,
+				FA770C87188DB7F7005ED309 /* UIKit.framework in Frameworks */,
+				FA770C83188DB7F7005ED309 /* Foundation.framework in Frameworks */,
+				A5F74B753FD34A22A6A55E2B /* libPods-MeetupPrizeChooser.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA770CA0188DB7F7005ED309 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA770CA5188DB7F7005ED309 /* XCTest.framework in Frameworks */,
+				FA770CA7188DB7F7005ED309 /* UIKit.framework in Frameworks */,
+				FA770CA6188DB7F7005ED309 /* Foundation.framework in Frameworks */,
+				B56935E172294AB199CBC1BF /* libPods-MeetupPrizeChooserTests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FA770C76188DB7F7005ED309 = {
+			isa = PBXGroup;
+			children = (
+				FA770C88188DB7F7005ED309 /* MeetupPrizeChooser */,
+				FA770CAA188DB7F7005ED309 /* MeetupPrizeChooserTests */,
+				FA770C81188DB7F7005ED309 /* Frameworks */,
+				FA770C80188DB7F7005ED309 /* Products */,
+				90F9E019F082449A9D427B10 /* Pods-MeetupPrizeChooser.xcconfig */,
+				7261EE82D08A48A2BA12981B /* Pods-MeetupPrizeChooserTests.xcconfig */,
+			);
+			sourceTree = "<group>";
+		};
+		FA770C80188DB7F7005ED309 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FA770C7F188DB7F7005ED309 /* MeetupPrizeChooser.app */,
+				FA770CA3188DB7F7005ED309 /* MeetupPrizeChooserTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FA770C81188DB7F7005ED309 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FA770C82188DB7F7005ED309 /* Foundation.framework */,
+				FA770C84188DB7F7005ED309 /* CoreGraphics.framework */,
+				FA770C86188DB7F7005ED309 /* UIKit.framework */,
+				FA770CA4188DB7F7005ED309 /* XCTest.framework */,
+				8CCB816950854EE8A3AB81AC /* libPods-MeetupPrizeChooser.a */,
+				9225B054DBE24F5BBA2EF3F8 /* libPods-MeetupPrizeChooserTests.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FA770C88188DB7F7005ED309 /* MeetupPrizeChooser */ = {
+			isa = PBXGroup;
+			children = (
+				FA770C91188DB7F7005ED309 /* AKAAppDelegate.h */,
+				FA770C92188DB7F7005ED309 /* AKAAppDelegate.m */,
+				FA770C94188DB7F7005ED309 /* Main.storyboard */,
+				FA770C97188DB7F7005ED309 /* AKAMasterViewController.h */,
+				FA770C98188DB7F7005ED309 /* AKAMasterViewController.m */,
+				FA770C9A188DB7F7005ED309 /* AKADetailViewController.h */,
+				FA770C9B188DB7F7005ED309 /* AKADetailViewController.m */,
+				FAFEA0D81912E7A9001BF8A6 /* AKAMeetupAPIKeyProvider.h */,
+				FAFEA0D91912E7A9001BF8A6 /* AKAMeetupAPIKeyProvider.m */,
+				FA952F79188DB8A300446BC9 /* AKAMeetupRequestManager.h */,
+				FA952F7A188DB8A300446BC9 /* AKAMeetupRequestManager.m */,
+				FA952F7F188DFF8A00446BC9 /* AKAMeetupEventCell.h */,
+				FA952F80188DFF8A00446BC9 /* AKAMeetupEventCell.m */,
+				FA952F83188E1DA200446BC9 /* AKARSVPCell.h */,
+				FA952F84188E1DA200446BC9 /* AKARSVPCell.m */,
+				FA770C9D188DB7F7005ED309 /* Images.xcassets */,
+				FA770C89188DB7F7005ED309 /* Supporting Files */,
+			);
+			path = MeetupPrizeChooser;
+			sourceTree = "<group>";
+		};
+		FA770C89188DB7F7005ED309 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				FA770C8A188DB7F7005ED309 /* MeetupPrizeChooser-Info.plist */,
+				FA770C8B188DB7F7005ED309 /* InfoPlist.strings */,
+				FA770C8E188DB7F7005ED309 /* main.m */,
+				FA770C90188DB7F7005ED309 /* MeetupPrizeChooser-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FA770CAA188DB7F7005ED309 /* MeetupPrizeChooserTests */ = {
+			isa = PBXGroup;
+			children = (
+				FA770CB0188DB7F7005ED309 /* MeetupPrizeChooserTests.m */,
+				FA770CAB188DB7F7005ED309 /* Supporting Files */,
+			);
+			path = MeetupPrizeChooserTests;
+			sourceTree = "<group>";
+		};
+		FA770CAB188DB7F7005ED309 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				FA770CAC188DB7F7005ED309 /* MeetupPrizeChooserTests-Info.plist */,
+				FA770CAD188DB7F7005ED309 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FA770C7E188DB7F7005ED309 /* MeetupPrizeChooser */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FA770CB4188DB7F7005ED309 /* Build configuration list for PBXNativeTarget "MeetupPrizeChooser" */;
+			buildPhases = (
+				31E72F60E83C403ABA3F7708 /* Check Pods Manifest.lock */,
+				FA770C7B188DB7F7005ED309 /* Sources */,
+				FA770C7C188DB7F7005ED309 /* Frameworks */,
+				FA770C7D188DB7F7005ED309 /* Resources */,
+				98BB0DA231BC42CD95897367 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MeetupPrizeChooser;
+			productName = MeetupPrizeChooser;
+			productReference = FA770C7F188DB7F7005ED309 /* MeetupPrizeChooser.app */;
+			productType = "com.apple.product-type.application";
+		};
+		FA770CA2188DB7F7005ED309 /* MeetupPrizeChooserTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FA770CB7188DB7F7005ED309 /* Build configuration list for PBXNativeTarget "MeetupPrizeChooserTests" */;
+			buildPhases = (
+				532A22D05592401DADB393CA /* Check Pods Manifest.lock */,
+				FA770C9F188DB7F7005ED309 /* Sources */,
+				FA770CA0188DB7F7005ED309 /* Frameworks */,
+				FA770CA1188DB7F7005ED309 /* Resources */,
+				0B1046E52E944D7A8FE088A7 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FA770CA9188DB7F7005ED309 /* PBXTargetDependency */,
+			);
+			name = MeetupPrizeChooserTests;
+			productName = MeetupPrizeChooserTests;
+			productReference = FA770CA3188DB7F7005ED309 /* MeetupPrizeChooserTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FA770C77188DB7F7005ED309 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = AKA;
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = "Alex Argo";
+				TargetAttributes = {
+					FA770CA2188DB7F7005ED309 = {
+						TestTargetID = FA770C7E188DB7F7005ED309;
+					};
+				};
+			};
+			buildConfigurationList = FA770C7A188DB7F7005ED309 /* Build configuration list for PBXProject "MeetupPrizeChooser" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FA770C76188DB7F7005ED309;
+			productRefGroup = FA770C80188DB7F7005ED309 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FA770C7E188DB7F7005ED309 /* MeetupPrizeChooser */,
+				FA770CA2188DB7F7005ED309 /* MeetupPrizeChooserTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FA770C7D188DB7F7005ED309 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA770C9E188DB7F7005ED309 /* Images.xcassets in Resources */,
+				FA770C8D188DB7F7005ED309 /* InfoPlist.strings in Resources */,
+				FA770C96188DB7F7005ED309 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA770CA1188DB7F7005ED309 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA770CAF188DB7F7005ED309 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0B1046E52E944D7A8FE088A7 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-MeetupPrizeChooserTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		31E72F60E83C403ABA3F7708 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		532A22D05592401DADB393CA /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		98BB0DA231BC42CD95897367 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-MeetupPrizeChooser-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FA770C7B188DB7F7005ED309 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA952F85188E1DA200446BC9 /* AKARSVPCell.m in Sources */,
+				FA952F81188DFF8A00446BC9 /* AKAMeetupEventCell.m in Sources */,
+				FA770C93188DB7F7005ED309 /* AKAAppDelegate.m in Sources */,
+				FA770C99188DB7F7005ED309 /* AKAMasterViewController.m in Sources */,
+				FA952F7B188DB8A300446BC9 /* AKAMeetupRequestManager.m in Sources */,
+				FA770C8F188DB7F7005ED309 /* main.m in Sources */,
+				FA770C9C188DB7F7005ED309 /* AKADetailViewController.m in Sources */,
+				FAFEA0DA1912E7A9001BF8A6 /* AKAMeetupAPIKeyProvider.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA770C9F188DB7F7005ED309 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA952F86188E1DA200446BC9 /* AKARSVPCell.m in Sources */,
+				FA952F82188DFF8A00446BC9 /* AKAMeetupEventCell.m in Sources */,
+				FAFEA0DB1912E7A9001BF8A6 /* AKAMeetupAPIKeyProvider.m in Sources */,
+				FA770CB1188DB7F7005ED309 /* MeetupPrizeChooserTests.m in Sources */,
+				FA952F7C188DB8A300446BC9 /* AKAMeetupRequestManager.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FA770CA9188DB7F7005ED309 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FA770C7E188DB7F7005ED309 /* MeetupPrizeChooser */;
+			targetProxy = FA770CA8188DB7F7005ED309 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		FA770C8B188DB7F7005ED309 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FA770C8C188DB7F7005ED309 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		FA770C94188DB7F7005ED309 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FA770C95188DB7F7005ED309 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		FA770CAD188DB7F7005ED309 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FA770CAE188DB7F7005ED309 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FA770CB2188DB7F7005ED309 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		FA770CB3188DB7F7005ED309 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FA770CB5188DB7F7005ED309 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 90F9E019F082449A9D427B10 /* Pods-MeetupPrizeChooser.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MeetupPrizeChooser/MeetupPrizeChooser-Prefix.pch";
+				INFOPLIST_FILE = "MeetupPrizeChooser/MeetupPrizeChooser-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		FA770CB6188DB7F7005ED309 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 90F9E019F082449A9D427B10 /* Pods-MeetupPrizeChooser.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MeetupPrizeChooser/MeetupPrizeChooser-Prefix.pch";
+				INFOPLIST_FILE = "MeetupPrizeChooser/MeetupPrizeChooser-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		FA770CB8188DB7F7005ED309 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7261EE82D08A48A2BA12981B /* Pods-MeetupPrizeChooserTests.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MeetupPrizeChooser.app/MeetupPrizeChooser";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MeetupPrizeChooser/MeetupPrizeChooser-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "MeetupPrizeChooserTests/MeetupPrizeChooserTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		FA770CB9188DB7F7005ED309 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7261EE82D08A48A2BA12981B /* Pods-MeetupPrizeChooserTests.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MeetupPrizeChooser.app/MeetupPrizeChooser";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MeetupPrizeChooser/MeetupPrizeChooser-Prefix.pch";
+				INFOPLIST_FILE = "MeetupPrizeChooserTests/MeetupPrizeChooserTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FA770C7A188DB7F7005ED309 /* Build configuration list for PBXProject "MeetupPrizeChooser" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA770CB2188DB7F7005ED309 /* Debug */,
+				FA770CB3188DB7F7005ED309 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FA770CB4188DB7F7005ED309 /* Build configuration list for PBXNativeTarget "MeetupPrizeChooser" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA770CB5188DB7F7005ED309 /* Debug */,
+				FA770CB6188DB7F7005ED309 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FA770CB7188DB7F7005ED309 /* Build configuration list for PBXNativeTarget "MeetupPrizeChooserTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA770CB8188DB7F7005ED309 /* Debug */,
+				FA770CB9188DB7F7005ED309 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FA770C77188DB7F7005ED309 /* Project object */;
+}
