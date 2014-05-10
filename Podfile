@@ -1,12 +1,12 @@
 platform :ios, "7.0"
 
-target "MeetupPrizeChooser" do
-   pod 'AFNetworking', '~> 2.1.0'
-   pod 'APAvatarImageView'
-end
+inhibit_all_warnings!
 
-target "MeetupPrizeChooserTests" do
-   pod 'AFNetworking', '~> 2.1.0'
-   pod 'APAvatarImageView'   
-end
+pod 'ReactiveCocoa', '~> 2.3'
+pod 'AFNetworking', '~> 2.1.0'
+pod 'APAvatarImageView'
+
+
+#target "MeetupPrizeChooserTests" do
+#end
 
