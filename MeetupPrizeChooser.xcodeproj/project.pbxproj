@@ -64,13 +64,6 @@ fi
 			<key>showEnvVarsInLog</key>
 			<string>0</string>
 		</dict>
-		<key>407A30C632EF4F50A9183886</key>
-		<dict>
-			<key>fileRef</key>
-			<string>90AAD0F5C2C04BBDAA7B2F02</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
 		<key>532A22D05592401DADB393CA</key>
 		<dict>
 			<key>buildActionMask</key>
@@ -101,6 +94,19 @@ fi
 			<key>showEnvVarsInLog</key>
 			<string>0</string>
 		</dict>
+		<key>6F10C47CBCCF4B6EA9022810</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>libPods-MeetupPrizeChooser.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
 		<key>7261EE82D08A48A2BA12981B</key>
 		<dict>
 			<key>includeInIndex</key>
@@ -116,32 +122,6 @@ fi
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>8CCB816950854EE8A3AB81AC</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>archive.ar</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>libPods-MeetupPrizeChooser.a</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>90AAD0F5C2C04BBDAA7B2F02</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>archive.ar</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>libPods.a</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
 		<key>90F9E019F082449A9D427B10</key>
 		<dict>
 			<key>includeInIndex</key>
@@ -156,19 +136,6 @@ fi
 			<string>Pods/Pods-MeetupPrizeChooser.xcconfig</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
-		</dict>
-		<key>9225B054DBE24F5BBA2EF3F8</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>archive.ar</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>libPods-MeetupPrizeChooserTests.a</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
 		</dict>
 		<key>98BB0DA231BC42CD95897367</key>
 		<dict>
@@ -189,39 +156,37 @@ fi
 			<key>shellPath</key>
 			<string>/bin/sh</string>
 			<key>shellScript</key>
-			<string>"${SRCROOT}/Pods/Pods-resources.sh"
+			<string>"${SRCROOT}/Pods/Pods-MeetupPrizeChooser-resources.sh"
 </string>
 			<key>showEnvVarsInLog</key>
 			<string>0</string>
 		</dict>
-		<key>A5F74B753FD34A22A6A55E2B</key>
+		<key>A7BF7B3FD25A4DAEBA6D9E43</key>
 		<dict>
-			<key>fileRef</key>
-			<string>8CCB816950854EE8A3AB81AC</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>B56935E172294AB199CBC1BF</key>
-		<dict>
-			<key>fileRef</key>
-			<string>9225B054DBE24F5BBA2EF3F8</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>BBE3019FE9C84F339C95BE04</key>
-		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
 			<key>includeInIndex</key>
-			<string>1</string>
+			<string>0</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods.xcconfig</string>
 			<key>path</key>
-			<string>Pods/Pods.xcconfig</string>
+			<string>libPods-MeetupPrizeChooserTests.a</string>
 			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>EE3EAC12AC8D4E51AD84A36A</key>
+		<dict>
+			<key>fileRef</key>
+			<string>6F10C47CBCCF4B6EA9022810</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>F3E277AF252E4ADDB0BEE52A</key>
+		<dict>
+			<key>fileRef</key>
+			<string>A7BF7B3FD25A4DAEBA6D9E43</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
 		</dict>
 		<key>FA770C76188DB7F7005ED309</key>
 		<dict>
@@ -233,7 +198,6 @@ fi
 				<string>FA770C80188DB7F7005ED309</string>
 				<string>90F9E019F082449A9D427B10</string>
 				<string>7261EE82D08A48A2BA12981B</string>
-				<string>BBE3019FE9C84F339C95BE04</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
@@ -247,7 +211,7 @@ fi
 				<key>CLASSPREFIX</key>
 				<string>AKA</string>
 				<key>LastUpgradeCheck</key>
-				<string>0500</string>
+				<string>0510</string>
 				<key>ORGANIZATIONNAME</key>
 				<string>Alex Argo</string>
 				<key>TargetAttributes</key>
@@ -333,8 +297,7 @@ fi
 				<string>FA770C85188DB7F7005ED309</string>
 				<string>FA770C87188DB7F7005ED309</string>
 				<string>FA770C83188DB7F7005ED309</string>
-				<string>A5F74B753FD34A22A6A55E2B</string>
-				<string>407A30C632EF4F50A9183886</string>
+				<string>EE3EAC12AC8D4E51AD84A36A</string>
 			</array>
 			<key>isa</key>
 			<string>PBXFrameworksBuildPhase</string>
@@ -418,9 +381,8 @@ fi
 				<string>FA770C84188DB7F7005ED309</string>
 				<string>FA770C86188DB7F7005ED309</string>
 				<string>FA770CA4188DB7F7005ED309</string>
-				<string>8CCB816950854EE8A3AB81AC</string>
-				<string>9225B054DBE24F5BBA2EF3F8</string>
-				<string>90AAD0F5C2C04BBDAA7B2F02</string>
+				<string>6F10C47CBCCF4B6EA9022810</string>
+				<string>A7BF7B3FD25A4DAEBA6D9E43</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
@@ -771,7 +733,7 @@ fi
 				<string>FA770CA5188DB7F7005ED309</string>
 				<string>FA770CA7188DB7F7005ED309</string>
 				<string>FA770CA6188DB7F7005ED309</string>
-				<string>B56935E172294AB199CBC1BF</string>
+				<string>F3E277AF252E4ADDB0BEE52A</string>
 			</array>
 			<key>isa</key>
 			<string>PBXFrameworksBuildPhase</string>
@@ -985,8 +947,6 @@ fi
 			<dict>
 				<key>ALWAYS_SEARCH_USER_PATHS</key>
 				<string>NO</string>
-				<key>ARCHS</key>
-				<string>$(ARCHS_STANDARD_INCLUDING_64_BIT)</string>
 				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
 				<string>gnu++0x</string>
 				<key>CLANG_CXX_LIBRARY</key>
@@ -1058,8 +1018,6 @@ fi
 			<dict>
 				<key>ALWAYS_SEARCH_USER_PATHS</key>
 				<string>NO</string>
-				<key>ARCHS</key>
-				<string>$(ARCHS_STANDARD_INCLUDING_64_BIT)</string>
 				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
 				<string>gnu++0x</string>
 				<key>CLANG_CXX_LIBRARY</key>
@@ -1133,7 +1091,7 @@ fi
 		<key>FA770CB5188DB7F7005ED309</key>
 		<dict>
 			<key>baseConfigurationReference</key>
-			<string>BBE3019FE9C84F339C95BE04</string>
+			<string>90F9E019F082449A9D427B10</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
@@ -1159,7 +1117,7 @@ fi
 		<key>FA770CB6188DB7F7005ED309</key>
 		<dict>
 			<key>baseConfigurationReference</key>
-			<string>BBE3019FE9C84F339C95BE04</string>
+			<string>90F9E019F082449A9D427B10</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
@@ -1202,8 +1160,6 @@ fi
 			<string>7261EE82D08A48A2BA12981B</string>
 			<key>buildSettings</key>
 			<dict>
-				<key>ARCHS</key>
-				<string>$(ARCHS_STANDARD_INCLUDING_64_BIT)</string>
 				<key>BUNDLE_LOADER</key>
 				<string>$(BUILT_PRODUCTS_DIR)/MeetupPrizeChooser.app/MeetupPrizeChooser</string>
 				<key>FRAMEWORK_SEARCH_PATHS</key>
@@ -1241,8 +1197,6 @@ fi
 			<string>7261EE82D08A48A2BA12981B</string>
 			<key>buildSettings</key>
 			<dict>
-				<key>ARCHS</key>
-				<string>$(ARCHS_STANDARD_INCLUDING_64_BIT)</string>
 				<key>BUNDLE_LOADER</key>
 				<string>$(BUILT_PRODUCTS_DIR)/MeetupPrizeChooser.app/MeetupPrizeChooser</string>
 				<key>FRAMEWORK_SEARCH_PATHS</key>

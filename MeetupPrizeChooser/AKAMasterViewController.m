@@ -6,7 +6,8 @@
 //  Copyright (c) 2014 Alex Argo. All rights reserved.
 //
 
-
+#import "ReactiveCocoa.h"
+#import "RACEXTScope.h"
 #import <AFNetworking/AFNetworking.h>
 #import "AKAMasterViewController.h"
 #import "AKADetailViewController.h"
@@ -28,35 +29,46 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.requestManager = [[AKAMeetupRequestManager alloc] init];
-    [self downloadMeetups];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadMeetups) name:AKAMeetupAPIKeySetNotification object:nil];
-}
 
-- (void) dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:AKAMeetupAPIKeySetNotification object:nil];
+    AKAMeetupAPIKeyProvider *apiKeyProvider = [[AKAMeetupAPIKeyProvider alloc]init];
+    [apiKeyProvider.meetupAPIKeySignal
+     subscribeNext:^(id x) {
+        self.requestManager = [[AKAMeetupRequestManager alloc] init];
+    }];
+
+    [RACObserve(self, requestManager) subscribeNext:^(id x) {
+        [self downloadMeetups];
+    }];
 }
 
 - (void)downloadMeetups
 {
-    [self.requestManager requestEventsForMeetupId:@"1715312" success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Response: %@",responseObject);
+    [self.requestManager
+     requestEventsForMeetupId:@"1715312"
+                      success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Response: %@", responseObject);
         NSDictionary *responseDictionary = responseObject;
         NSArray *events = responseDictionary[@"results"];
-        NSLog(@"Count: %@",@([events count]));
-        for(NSDictionary *event in events) {
+        NSLog(@"Count: %@", @([events count]));
+
+        for (NSDictionary * event in events) {
             if (!_objects) {
                 _objects = [[NSMutableArray alloc] init];
             }
-            [_objects insertObject:event atIndex:0];
-            NSLog(@"Event: %@",event[@"name"]);
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-            [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+
+            [_objects insertObject:event
+                           atIndex:0];
+            NSLog(@"Event: %@", event[@"name"]);
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0
+                                                        inSection:0];
+            [self.tableView
+             insertRowsAtIndexPaths:@[indexPath]
+                   withRowAnimation:UITableViewRowAnimationAutomatic];
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@",error);
+    }
+
+                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
     }];
 }
 
@@ -79,8 +91,9 @@
     NSDictionary *event = _objects[indexPath.row];
     NSNumber *timeSince1970 = event[@"time"];
     NSTimeInterval timeInterval = timeSince1970.longLongValue;
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:(timeInterval/1000)];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:(timeInterval / 1000)];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+
     [formatter setDateStyle:NSDateFormatterShortStyle];
     [formatter setTimeStyle:NSDateFormatterShortStyle];
 
@@ -106,20 +119,20 @@
 }
 
 /*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
+   // Override to support rearranging the table view.
+   - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+   {
+   }
+ */
 
 /*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
+   // Override to support conditional rearranging of the table view.
+   - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+   {
     // Return NO if you do not want the item to be re-orderable.
     return YES;
-}
-*/
+   }
+ */
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
