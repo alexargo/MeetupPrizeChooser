@@ -1,1 +1,0 @@
-../../APAvatarImageView/Classes/APAvatarImageView.h
