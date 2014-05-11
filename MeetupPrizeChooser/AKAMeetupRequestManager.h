@@ -19,6 +19,7 @@
 - (id)initWithKeyProvider:(AKAMeetupAPIKeyProvider *)keyProvider;
 
 - (RACSignal *)meetupsSignalWithID:(NSString *)meetupId;
+- (RACSignal *)rsvpsSignalWithID:(NSString *)eventId;
 
 - (NSArray *)requestEventsForMeetupId:(NSString *)meetupId
     success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success

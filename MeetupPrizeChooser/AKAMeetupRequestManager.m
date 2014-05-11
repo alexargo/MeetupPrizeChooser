@@ -33,8 +33,8 @@
 {
     RACSignal *s = [RACSignal createSignal:^RACDisposable *(id < RACSubscriber > subscriber) {
         [self requestEventsForMeetupId:meetupId
-                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            [subscriber sendNext:[self parseEventResults:responseObject]];
+                               success:^(AFHTTPRequestOperation *operation, NSDictionary *response) {
+            [subscriber sendNext:response[@"results"]];
             [subscriber sendCompleted];
         }
 
@@ -49,20 +49,6 @@
     return s;
 }
 
-- (NSArray *)parseEventResults:(NSDictionary *)responseDictionary
-{
-    NSMutableArray *objects = [[NSMutableArray alloc]init];
-
-    NSArray *events = responseDictionary[@"results"];
-
-    for (NSDictionary *event in events) {
-        [objects insertObject:event
-                      atIndex:0];
-    }
-
-    return objects;
-}
-
 - (AFHTTPRequestOperation *)requestEventsForMeetupId:(NSString *)meetupId
     success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
@@ -71,6 +57,24 @@
     AFHTTPRequestOperation *operation = [self GET:@"events" parameters:params success:success failure:failure];
 
     return operation;
+}
+
+- (RACSignal *)rsvpsSignalWithID:(NSString *)eventId
+{
+    @weakify(self);
+    return [RACSignal createSignal:^RACDisposable *(id < RACSubscriber > subscriber) {
+        @strongify(self);
+        [self requestRSVPsForEventId:eventId
+                             success:^(AFHTTPRequestOperation *operation, NSDictionary *response) {
+            [subscriber sendNext:response[@"results"]];
+            [subscriber sendCompleted];
+        }
+
+                             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [subscriber sendError:error];
+        }];
+        return nil;
+    }];
 }
 
 - (AFHTTPRequestOperation *)requestRSVPsForEventId:(NSString *)eventId
