@@ -13,7 +13,9 @@
 extern NSString *const AKAMeetupAPIKeySetNotification;
 
 @interface AKAMeetupAPIKeyProvider : NSObject <UIAlertViewDelegate>
+@property (nonatomic, copy) NSString *apiKey;
 
+- (RACSignal *)meetupAPIKeyNeededSignal;
 - (RACSignal *)meetupAPIKeySignal;
 - (NSString *)meetupAPIKey;
 

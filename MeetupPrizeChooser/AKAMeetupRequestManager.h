@@ -7,18 +7,27 @@
 //
 
 #import <Foundation/Foundation.h>
+
 #import <AFNetworking/AFHTTPRequestOperationManager.h>
+#import "ReactiveCocoa.h"
+#import "RACEXTScope.h"
+
+@class AKAMeetupAPIKeyProvider;
 
 @interface AKAMeetupRequestManager : AFHTTPRequestOperationManager
 
+- (id)initWithKeyProvider:(AKAMeetupAPIKeyProvider *)keyProvider;
+
+- (RACSignal *)meetupsSignalWithID:(NSString *)meetupId;
+
 - (NSArray *)requestEventsForMeetupId:(NSString *)meetupId
-                              success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+    success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 
 - (NSArray *)requestRSVPsForEventId:(NSString *)eventId
-                              success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+    success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 
 @end

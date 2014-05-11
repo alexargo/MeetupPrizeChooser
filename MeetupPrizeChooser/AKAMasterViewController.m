@@ -18,9 +18,9 @@
 
 
 @interface AKAMasterViewController ()
-
+@property (nonatomic, strong) AKAMeetupAPIKeyProvider *apiKeyProvider;
 @property (nonatomic, strong) AKAMeetupRequestManager *requestManager;
-@property (nonatomic, strong) NSMutableArray *objects;
+@property (nonatomic, strong) NSArray *objects;
 
 @end
 
@@ -30,45 +30,54 @@
 {
     [super viewDidLoad];
 
-    AKAMeetupAPIKeyProvider *apiKeyProvider = [[AKAMeetupAPIKeyProvider alloc]init];
-    [apiKeyProvider.meetupAPIKeySignal
+    self.apiKeyProvider = [[AKAMeetupAPIKeyProvider alloc]init];
+
+    @weakify(self);
+    [self.apiKeyProvider.meetupAPIKeyNeededSignal
      subscribeNext:^(id x) {
-        self.requestManager = [[AKAMeetupRequestManager alloc] init];
+        @strongify(self);
+        [self promptForKey];
     }];
 
-    [RACObserve(self, requestManager) subscribeNext:^(id x) {
+    [self.apiKeyProvider.meetupAPIKeySignal
+     subscribeNext:^(id x) {
+        @strongify(self);
+        self.requestManager = [[AKAMeetupRequestManager alloc] initWithKeyProvider:self.apiKeyProvider];
+    }];
+
+    [[RACObserve(self, requestManager)
+      filter:^BOOL (id value) {
+        @strongify(self);
+        return self.requestManager != nil;
+    }] subscribeNext:^(id x) {
+        @strongify(self);
         [self downloadMeetups];
     }];
 }
 
+- (void)promptForKey
+{
+    UIAlertView *apiAlert = [[UIAlertView alloc] initWithTitle:@"API Key" message:@"What's your meetup.com API key?" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+
+    apiAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    @weakify(self);
+    [apiAlert.rac_buttonClickedSignal
+     subscribeNext:^(NSNumber *buttonIndex) {
+        @strongify(self);
+        UITextField *textField = [apiAlert textFieldAtIndex:0];
+        self.apiKeyProvider.apiKey = textField.text;
+    }];
+
+    [apiAlert show];
+}
+
 - (void)downloadMeetups
 {
-    [self.requestManager
-     requestEventsForMeetupId:@"1715312"
-                      success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Response: %@", responseObject);
-        NSDictionary *responseDictionary = responseObject;
-        NSArray *events = responseDictionary[@"results"];
-        NSLog(@"Count: %@", @([events count]));
-
-        for (NSDictionary * event in events) {
-            if (!_objects) {
-                _objects = [[NSMutableArray alloc] init];
-            }
-
-            [_objects insertObject:event
-                           atIndex:0];
-            NSLog(@"Event: %@", event[@"name"]);
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0
-                                                        inSection:0];
-            [self.tableView
-             insertRowsAtIndexPaths:@[indexPath]
-                   withRowAnimation:UITableViewRowAnimationAutomatic];
-        }
-    }
-
-                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+    [[self.requestManager
+      meetupsSignalWithID:@"1715312"] subscribeNext:^(NSArray *events) {
+        NSLog(@"meetups downloaded");
+        self.objects = events;
+        [self.tableView reloadData];
     }];
 }
 
@@ -101,38 +110,6 @@
     cell.dateLabel.text = [formatter stringFromDate:date];
     return cell;
 }
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [_objects removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-    }
-}
-
-/*
-   // Override to support rearranging the table view.
-   - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-   {
-   }
- */
-
-/*
-   // Override to support conditional rearranging of the table view.
-   - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-   {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-   }
- */
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

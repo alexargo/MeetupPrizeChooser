@@ -13,25 +13,24 @@ NSString *const AKAMeetupAPIKeySetNotification = @"AKAMeetupAPIKeySetNotificatio
 
 @interface AKAMeetupAPIKeyProvider ()
 
-@property (nonatomic, copy) NSString *apiKey;
+
 
 @end
 
 @implementation AKAMeetupAPIKeyProvider
 
+- (RACSignal *)meetupAPIKeyNeededSignal
+{
+    return [RACObserve(self, apiKey) filter:^BOOL (NSString *value) {
+        return value == nil;
+    }];
+}
+
 - (RACSignal *)meetupAPIKeySignal
 {
-    RACSignal *s = [RACSignal createSignal:^RACDisposable *(id < RACSubscriber > subscriber) {
-        if (self.apiKey == nil) {
-            //Something
-        }
-
-        [subscriber sendNext:self.apiKey];
-        [subscriber sendCompleted];
-        return nil;
+    return [RACObserve(self, apiKey) filter:^BOOL (NSString *value) {
+        return value != nil;
     }];
-
-    return s;
 }
 
 - (NSString *)meetupAPIKey
@@ -41,7 +40,7 @@ NSString *const AKAMeetupAPIKeySetNotification = @"AKAMeetupAPIKeySetNotificatio
 
         if (!self.apiKey) {
 //            dispatch_sync(dispatch_get_main_queue(), ^{
-            [self showAPIPromptAlertView];
+//            [self showAPIPromptAlertView];
 //            });
             return @"";
         }
@@ -50,21 +49,22 @@ NSString *const AKAMeetupAPIKeySetNotification = @"AKAMeetupAPIKeySetNotificatio
     return self.apiKey;
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+@synthesize apiKey = _apiKey;
+- (NSString *)apiKey
 {
-    UITextField *textField = [alertView textFieldAtIndex:0];
+    if (_apiKey) {
+        return _apiKey;
+    }
 
-    [[NSUserDefaults standardUserDefaults] setObject:textField.text forKey:@"MeetupAPIKey"];
+    _apiKey = [[NSUserDefaults standardUserDefaults] stringForKey:@"MeetupAPIKey"];
+    return _apiKey;
+}
+
+- (void)setApiKey:(NSString *)apiKey
+{
+    [[NSUserDefaults standardUserDefaults] setObject:apiKey forKey:@"MeetupAPIKey"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-
-    [[NSNotificationCenter defaultCenter] postNotificationName:AKAMeetupAPIKeySetNotification object:self];
+    _apiKey = apiKey;
 }
-
-- (void)showAPIPromptAlertView; {
-    UIAlertView *apiAlert = [[UIAlertView alloc] initWithTitle:@"API Key" message:@"What's your meetup.com API key?" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-    apiAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    [apiAlert show];
-}
-
 
 @end
