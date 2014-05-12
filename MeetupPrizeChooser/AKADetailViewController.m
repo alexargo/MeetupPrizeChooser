@@ -22,6 +22,8 @@
 
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 
+@property (nonatomic, strong, readonly) RACCommand *executionCommand;
+
 @end
 
 @implementation AKADetailViewController
@@ -37,7 +39,34 @@
     [self observeEvent];
     [self configureRefresh];
 
-    UIBarButtonItem *subtractBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(byeByeAvatar)];
+    UIBarButtonItem *subtractBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:nil action:nil];
+    subtractBarButtonItem.rac_command = [self executionCommand];
+    [[subtractBarButtonItem.rac_command.executionSignals flatten]
+     subscribeNext:^(NSArray *executions) {
+        int startSuspense = 6;
+        int count = 0;
+        int executionsCount = [executions count];
+
+        for (NSNumber * num in executions) {
+            double delay = 0.1;
+            int diff = executionsCount - count++;
+
+            if (diff < startSuspense) {
+                delay = 0.5 * (startSuspense - diff);
+            }
+
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                NSInteger index = [num integerValue];
+                [self execute:index];
+            });
+        }
+    }];
+
+    [RACObserve(self, rsvps) subscribeNext:^(NSArray *rsvps) {
+        BOOL shouldEnable = (rsvps != nil) && ([rsvps count] > 1);
+        subtractBarButtonItem.enabled = shouldEnable;
+    }];
+
     self.navigationItem.rightBarButtonItems = @[subtractBarButtonItem];
 }
 
@@ -71,7 +100,8 @@
     [[self.requestManager
       rsvpsSignalWithID:self.event[@"id"]] subscribeNext:^(NSArray *rsvps) {
         self.rsvps = [rsvps mutableCopy];
-        [self randomizeRsvps];
+
+        [self randomizeRsvps:self.rsvps];
         [self.collectionView reloadData];
         [self.refreshControl endRefreshing];
     }
@@ -87,9 +117,9 @@
     }];
 }
 
-- (void)randomizeRsvps
+- (void)randomizeRsvps:(NSMutableArray *)rsvps
 {
-    NSUInteger count = [self.rsvps count];
+    NSUInteger count = [rsvps count];
 
     for (uint i = 0; i < count; ++i) {
         // Select a random element between i and end of array to swap with.
@@ -101,24 +131,42 @@
     }
 }
 
-- (void)byeByeAvatar
+@synthesize executionCommand = _executionCommand;
+- (RACCommand *)executionCommand
 {
-    if ([self.rsvps count] > 1) {
-        int indexToRemove = arc4random_uniform((int)[self.rsvps count]);
-        [self.rsvps removeObjectAtIndex:indexToRemove];
-        [self.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:indexToRemove inSection:0]]];
-        int startSuspense = 6;
-        double delayInSeconds = 0.1;
-
-        if ([self.rsvps count] < startSuspense) {
-            delayInSeconds = 0.5 * (startSuspense - [self.rsvps count]);
-        }
-
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
-            [self byeByeAvatar];
-        });
+    if (_executionCommand == nil) {
+        @weakify(self);
+        _executionCommand = [[RACCommand alloc]initWithSignalBlock:^RACSignal *(id input) {
+            @strongify(self);
+            return [RACSignal createSignal:^RACDisposable *(id < RACSubscriber > subscriber) {
+                [subscriber sendNext:[self executionSequence]];
+                [subscriber sendCompleted];
+                return nil;
+            }];
+        }];
     }
+
+    return _executionCommand;
+}
+
+- (NSArray *)executionSequence
+{
+    NSMutableArray *picks = [[NSMutableArray alloc]initWithCapacity:[self.rsvps count]];
+    NSInteger count = [self.rsvps count];
+
+    for (uint i = 0; i < count - 1; ++i) {
+        [picks addObject:@(arc4random_uniform(count - i))];
+    }
+
+    return picks;
+}
+
+- (void)execute:(NSInteger)index
+{
+    [self.rsvps removeObjectAtIndex:index];
+    [self.collectionView
+     deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index
+                                                   inSection:0]]];
 }
 
 #pragma mark - UICollectionViewDataSource
