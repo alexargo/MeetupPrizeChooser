@@ -18,7 +18,7 @@
 {
     [self prepareForReuse];
     self.tapGesture = [[UITapGestureRecognizer alloc]init];
-    [self.tapGesture setNumberOfTapsRequired:1];
+    [self.tapGesture setNumberOfTapsRequired:2];
     [self.avatarImageView addGestureRecognizer:self.tapGesture];
 }
 
