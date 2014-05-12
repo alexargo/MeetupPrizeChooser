@@ -8,24 +8,39 @@
 
 #import "AKARSVPCell.h"
 
+@interface AKARSVPCell ()
+@property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
+@end
+
 @implementation AKARSVPCell
 
-- (id)initWithFrame:(CGRect)frame
+- (void)awakeFromNib
 {
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
+    [self prepareForReuse];
+    self.tapGesture = [[UITapGestureRecognizer alloc]init];
+    [self.tapGesture setNumberOfTapsRequired:1];
+    [self.avatarImageView addGestureRecognizer:self.tapGesture];
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+- (RACSignal *)tapSignal
 {
-    // Drawing code
+    return self.tapGesture.rac_gestureSignal;
 }
-*/
+
+- (void)configureCellWithRsvp:(NSDictionary *)rsvp
+{
+    self.nameLabel.text = rsvp[@"member"][@"name"];
+}
+
+- (void)prepareForReuse
+{
+    static UIImage *defaultImage;
+    static dispatch_once_t onceToken;
+
+    dispatch_once(&onceToken, ^{
+        defaultImage = [UIImage imageNamed:@"Forstall"];
+    });
+    self.avatarImageView.image = defaultImage;
+}
 
 @end

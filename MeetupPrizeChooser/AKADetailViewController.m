@@ -7,6 +7,7 @@
 //
 
 #import "AKADetailViewController.h"
+#import "ReactiveCocoa.h"
 #import "RACEXTScope.h"
 #import <AFNetworking/AFNetworking.h>
 
@@ -189,15 +190,26 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     AKARSVPCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"RSVPCell" forIndexPath:indexPath];
+    NSDictionary *rsvp = self.rsvps[indexPath.row];
 
-    cell.nameLabel.text = self.rsvps[indexPath.row][@"member"][@"name"];
-    UIImage *defaultImage = [UIImage imageNamed:@"Forstall"];
+    [cell configureCellWithRsvp:rsvp];
 
     if (self.rsvps[indexPath.row][@"member_photo"]) {
-        [cell.avatarImageView setImageWithURL:[NSURL URLWithString:self.rsvps[indexPath.row][@"member_photo"][@"photo_link"]] placeholderImage:defaultImage];
-    } else {
-        cell.avatarImageView.image = defaultImage;
+        [cell.avatarImageView setImageWithURL:[NSURL URLWithString:self.rsvps[indexPath.row][@"member_photo"][@"photo_link"]]];
     }
+
+    @weakify(self);
+    [[[cell.tapSignal
+       takeUntil:cell.rac_prepareForReuseSignal]
+      filter:^BOOL (UITapGestureRecognizer *tap) {
+        return tap.state == UIGestureRecognizerStateRecognized;
+    }]
+     subscribeNext:^(UITapGestureRecognizer *tap) {
+        @strongify(self);
+        NSIndexPath *path = [self.collectionView
+                             indexPathForCell:cell];
+        [self execute:path.row];
+    }];
 
     return cell;
 }

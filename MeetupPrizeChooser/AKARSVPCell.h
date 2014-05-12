@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ReactiveCocoa.h"
+#import "RACEXTScope.h"
 
 @interface AKARSVPCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 
+- (void)configureCellWithRsvp:(NSDictionary *)rsvp;
+- (RACSignal *)tapSignal;
 @end
