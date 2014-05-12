@@ -53,7 +53,11 @@
     success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    NSDictionary *params = @{ @"group_id": meetupId, @"key": self.keyProvider.meetupAPIKey, /*@"time":@"1m",*/ @"status": @"past,upcoming", @"rsvp": @"yes" /*@"page":@(25)*/ };
+    NSDictionary *params = @{ @"group_id": meetupId,
+                              @"key": self.keyProvider.meetupAPIKey,
+                              @"time": @"-8m,1m",
+                              @"status": @"past,upcoming"
+                              /*@"page":@(25)*/ };
     AFHTTPRequestOperation *operation = [self GET:@"events" parameters:params success:success failure:failure];
 
     return operation;

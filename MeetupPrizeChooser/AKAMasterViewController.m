@@ -73,8 +73,14 @@
 
 - (void)downloadMeetups
 {
-    [[self.requestManager
-      meetupsSignalWithID:@"1715312"] subscribeNext:^(NSArray *events) {
+    [[[self.requestManager
+       meetupsSignalWithID:@"1715312"] map:^id (NSArray *events) {
+        return [events sortedArrayUsingComparator:^NSComparisonResult (NSDictionary *e1, NSDictionary *e2) {
+            return [e2[@"time"]
+                    compare:e1[@"time"]];
+        }];
+    }]
+     subscribeNext:^(NSArray *events) {
         NSLog(@"meetups downloaded");
         self.objects = events;
         [self.tableView reloadData];
