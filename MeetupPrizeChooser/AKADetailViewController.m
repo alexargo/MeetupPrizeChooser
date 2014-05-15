@@ -40,6 +40,7 @@
     [self observeEvent];
     [self configureRefresh];
 
+    @weakify(self);
     UIBarButtonItem *subtractBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:nil action:nil];
     subtractBarButtonItem.rac_command = [self executionCommand];
     [[subtractBarButtonItem.rac_command.executionSignals flatten]
@@ -58,6 +59,7 @@
 
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 NSInteger index = [num integerValue];
+                @strongify(self);
                 [self execute:index];
             });
         }
@@ -75,8 +77,10 @@
 {
     self.refreshControl = [[UIRefreshControl alloc]init];
     [self.collectionView addSubview:self.refreshControl];
+    @weakify(self);
     [[self.refreshControl
       rac_signalForControlEvents:UIControlEventValueChanged] subscribeNext:^(id x) {
+        @strongify(self);
         [self downloadRSVPs];
     }];
 }
