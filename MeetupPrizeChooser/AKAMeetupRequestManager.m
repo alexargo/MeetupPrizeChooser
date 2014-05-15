@@ -39,8 +39,10 @@
         }
 
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            //inspect for api key failure
-            self.keyProvider.apiKey = nil;
+            if (operation.response.statusCode == 401) {
+                self.keyProvider.apiKey = nil;
+            }
+
             [subscriber sendError:error];
         }];
         return nil;

@@ -84,6 +84,15 @@
         NSLog(@"meetups downloaded");
         self.objects = events;
         [self.tableView reloadData];
+    }
+
+             error:^(NSError *error) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error"
+                                                       message:error.localizedDescription
+                                                      delegate:nil
+                                             cancelButtonTitle:nil
+                                             otherButtonTitles:@"OK", nil];
+        [alert show];
     }];
 }
 
