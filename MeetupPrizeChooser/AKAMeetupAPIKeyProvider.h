@@ -7,11 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ReactiveCocoa.h"
+#import "RACEXTScope.h"
 
 extern NSString *const AKAMeetupAPIKeySetNotification;
 
 @interface AKAMeetupAPIKeyProvider : NSObject <UIAlertViewDelegate>
+@property (nonatomic, copy) NSString *apiKey;
 
-- (NSString *) meetupAPIKey;
+- (RACSignal *)meetupAPIKeyNeededSignal;
+- (RACSignal *)meetupAPIKeySignal;
+- (NSString *)meetupAPIKey;
 
 @end

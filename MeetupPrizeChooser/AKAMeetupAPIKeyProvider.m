@@ -8,43 +8,63 @@
 
 #import "AKAMeetupAPIKeyProvider.h"
 
+
 NSString *const AKAMeetupAPIKeySetNotification = @"AKAMeetupAPIKeySetNotification";
 
 @interface AKAMeetupAPIKeyProvider ()
 
-@property (nonatomic, copy) NSString *apiKey;
+
 
 @end
 
 @implementation AKAMeetupAPIKeyProvider
 
-- (NSString *) meetupAPIKey {
-    if(!self.apiKey) {
+- (RACSignal *)meetupAPIKeyNeededSignal
+{
+    return [RACObserve(self, apiKey) filter:^BOOL (NSString *value) {
+        return value == nil;
+    }];
+}
+
+- (RACSignal *)meetupAPIKeySignal
+{
+    return [RACObserve(self, apiKey) filter:^BOOL (NSString *value) {
+        return value != nil;
+    }];
+}
+
+- (NSString *)meetupAPIKey
+{
+    if (!self.apiKey) {
         self.apiKey = [[NSUserDefaults standardUserDefaults] stringForKey:@"MeetupAPIKey"];
-        if(!self.apiKey) {
+
+        if (!self.apiKey) {
 //            dispatch_sync(dispatch_get_main_queue(), ^{
-                [self showAPIPromptAlertView];
+//            [self showAPIPromptAlertView];
 //            });
             return @"";
         }
     }
+
     return self.apiKey;
-
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    UITextField *textField = [alertView textFieldAtIndex:0];
-    [[NSUserDefaults standardUserDefaults] setObject:textField.text forKey:@"MeetupAPIKey"];
+@synthesize apiKey = _apiKey;
+- (NSString *)apiKey
+{
+    if (_apiKey) {
+        return _apiKey;
+    }
+
+    _apiKey = [[NSUserDefaults standardUserDefaults] stringForKey:@"MeetupAPIKey"];
+    return _apiKey;
+}
+
+- (void)setApiKey:(NSString *)apiKey
+{
+    [[NSUserDefaults standardUserDefaults] setObject:apiKey forKey:@"MeetupAPIKey"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:AKAMeetupAPIKeySetNotification object:self];
+    _apiKey = apiKey;
 }
-
-- (void) showAPIPromptAlertView; {
-    UIAlertView *apiAlert = [[UIAlertView alloc] initWithTitle:@"API Key" message:@"What's your meetup.com API key?" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-    apiAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    [apiAlert show];
-}
-
 
 @end

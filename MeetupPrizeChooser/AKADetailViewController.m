@@ -7,15 +7,23 @@
 //
 
 #import "AKADetailViewController.h"
+#import "ReactiveCocoa.h"
+#import "RACEXTScope.h"
+#import <AFNetworking/AFNetworking.h>
+
+#import "AKAMeetupAPIKeyProvider.h"
 #import "AKAMeetupRequestManager.h"
 #import "AKARSVPCell.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
 
 @interface AKADetailViewController ()
-- (void)configureView;
 
 @property (nonatomic, strong) NSMutableArray *rsvps;
 @property (nonatomic, strong) AKAMeetupRequestManager *requestManager;
+
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
+
+@property (nonatomic, strong, readonly) RACCommand *executionCommand;
 
 @end
 
@@ -23,110 +31,191 @@
 
 #pragma mark - Managing the detail item
 
-- (void)configureView
-{
-    // Update the user interface for the detail item.
-
-    if (self.event) {
-        self.navigationItem.title = self.event[@"name"];
-        self.detailDescriptionLabel.text = [self.event description];
-        [self.requestManager requestRSVPsForEventId:self.event[@"id"] success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSDictionary *responseDictionary = responseObject;
-            
-            self.rsvps = [responseDictionary[@"results"] mutableCopy];
-            NSUInteger count = [self.rsvps count];
-            for (uint i = 0; i < count; ++i)
-            {
-                // Select a random element between i and end of array to swap with.
-                int nElements = count - i;
-                int n = arc4random_uniform(nElements) + i;
-                [self.rsvps exchangeObjectAtIndex:i withObjectAtIndex:n];
-            }
-            
-            NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:0];
-            [self.collectionView insertSections:indexSet];
-            
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[error description] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-            [alert show];
-        }];
-        
-    }
-}
-
-- (void)reset {
-    if(self.rsvps) {
-        self.rsvps = nil;
-        [self.collectionView deleteSections:[NSIndexSet indexSetWithIndex:0]];
-        [self configureView];
-    }
-    
-}
-
-- (void)byeByeAvatar {
-    if([self.rsvps count]>1) {
-        int indexToRemove = arc4random_uniform((int)[self.rsvps count]);
-        [self.rsvps removeObjectAtIndex:indexToRemove];
-        [self.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:indexToRemove inSection:0]]];
-        int startSuspense = 6;
-        double delayInSeconds = 0.1;
-        if([self.rsvps count] < startSuspense) {
-            delayInSeconds = 0.5 * (startSuspense-[self.rsvps count]);
-        }
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [self byeByeAvatar];
-        });
-    }
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    self.requestManager = [[AKAMeetupRequestManager alloc] init];
 
-    [self configureView];
-    UIBarButtonItem *refreshBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reset)];
-    UIBarButtonItem *subtractBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(byeByeAvatar)];
-    self.navigationItem.rightBarButtonItems = @[refreshBarButtonItem,subtractBarButtonItem];
-    
+    self.requestManager = [[AKAMeetupRequestManager alloc] initWithKeyProvider:[[AKAMeetupAPIKeyProvider alloc]init]];
+
+    [self observeEvent];
+    [self configureRefresh];
+
+    @weakify(self);
+    UIBarButtonItem *subtractBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:nil action:nil];
+    subtractBarButtonItem.rac_command = [self executionCommand];
+    [[subtractBarButtonItem.rac_command.executionSignals flatten]
+     subscribeNext:^(NSArray *executions) {
+        int startSuspense = 6;
+        int count = 0;
+        int executionsCount = [executions count];
+
+        for (NSNumber * num in executions) {
+            double delay = 0.1;
+            int diff = executionsCount - count++;
+
+            if (diff < startSuspense) {
+                delay = 0.5 * (startSuspense - diff);
+            }
+
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                NSInteger index = [num integerValue];
+                @strongify(self);
+                [self execute:index];
+            });
+        }
+    }];
+
+    [RACObserve(self, rsvps) subscribeNext:^(NSArray *rsvps) {
+        BOOL shouldEnable = (rsvps != nil) && ([rsvps count] > 1);
+        subtractBarButtonItem.enabled = shouldEnable;
+    }];
+
+    self.navigationItem.rightBarButtonItems = @[subtractBarButtonItem];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)configureRefresh
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    self.refreshControl = [[UIRefreshControl alloc]init];
+    [self.collectionView addSubview:self.refreshControl];
+    @weakify(self);
+    [[self.refreshControl
+      rac_signalForControlEvents:UIControlEventValueChanged] subscribeNext:^(id x) {
+        @strongify(self);
+        [self downloadRSVPs];
+    }];
+}
+
+- (void)observeEvent
+{
+    // Update the user interface for the detail item.
+    @weakify(self);
+    [[RACObserve(self, event) filter:^BOOL (NSObject *value) {
+        return value != nil;
+    }] subscribeNext:^(NSDictionary *event) {
+        @strongify(self);
+        self.navigationItem.title = event[@"name"];
+        self.detailDescriptionLabel.text = [event description];
+        [self downloadRSVPs];
+    }];
+}
+
+- (void)downloadRSVPs
+{
+    [self.refreshControl beginRefreshing];
+    [[self.requestManager
+      rsvpsSignalWithID:self.event[@"id"]] subscribeNext:^(NSArray *rsvps) {
+        self.rsvps = [rsvps mutableCopy];
+
+        [self randomizeRsvps:self.rsvps];
+        [self.collectionView reloadData];
+        [self.refreshControl endRefreshing];
+    }
+
+                                                   error:^(NSError *error) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:[error description]
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        [self.refreshControl endRefreshing];
+    }];
+}
+
+- (void)randomizeRsvps:(NSMutableArray *)rsvps
+{
+    NSUInteger count = [rsvps count];
+
+    for (uint i = 0; i < count; ++i) {
+        // Select a random element between i and end of array to swap with.
+        int nElements = count - i;
+        int n = arc4random_uniform(nElements) + i;
+        [self.rsvps
+         exchangeObjectAtIndex:i
+             withObjectAtIndex:n];
+    }
+}
+
+@synthesize executionCommand = _executionCommand;
+- (RACCommand *)executionCommand
+{
+    if (_executionCommand == nil) {
+        @weakify(self);
+        _executionCommand = [[RACCommand alloc]initWithSignalBlock:^RACSignal *(id input) {
+            @strongify(self);
+            return [RACSignal createSignal:^RACDisposable *(id < RACSubscriber > subscriber) {
+                [subscriber sendNext:[self executionSequence]];
+                [subscriber sendCompleted];
+                return nil;
+            }];
+        }];
+    }
+
+    return _executionCommand;
+}
+
+- (NSArray *)executionSequence
+{
+    NSMutableArray *picks = [[NSMutableArray alloc]initWithCapacity:[self.rsvps count]];
+    NSInteger count = [self.rsvps count];
+
+    for (uint i = 0; i < count - 1; ++i) {
+        [picks addObject:@(arc4random_uniform(count - i))];
+    }
+
+    return picks;
+}
+
+- (void)execute:(NSInteger)index
+{
+    [self.rsvps removeObjectAtIndex:index];
+    [self.collectionView
+     deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index
+                                                   inSection:0]]];
 }
 
 #pragma mark - UICollectionViewDataSource
 
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    if(self.rsvps) {
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    if (self.rsvps) {
         return 1;
     } else {
         return 0;
     }
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [self.rsvps count];;
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return [self.rsvps count];
 }
 
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
     AKARSVPCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"RSVPCell" forIndexPath:indexPath];
-    cell.nameLabel.text = self.rsvps[indexPath.row][@"member"][@"name"];
-    UIImage *defaultImage = [UIImage imageNamed:@"Forstall"];
-    if(self.rsvps[indexPath.row][@"member_photo"]) {
-        [cell.avatarImageView setImageWithURL:[NSURL URLWithString:self.rsvps[indexPath.row][@"member_photo"][@"photo_link"]] placeholderImage:defaultImage];
-    } else {
-        cell.avatarImageView.image = defaultImage;
+    NSDictionary *rsvp = self.rsvps[indexPath.row];
+
+    [cell configureCellWithRsvp:rsvp];
+
+    if (self.rsvps[indexPath.row][@"member_photo"]) {
+        [cell.avatarImageView setImageWithURL:[NSURL URLWithString:self.rsvps[indexPath.row][@"member_photo"][@"photo_link"]]];
     }
-    
+
+    @weakify(self);
+    [[[cell.tapSignal
+       takeUntil:cell.rac_prepareForReuseSignal]
+      filter:^BOOL (UITapGestureRecognizer *tap) {
+        return tap.state == UIGestureRecognizerStateRecognized;
+    }]
+     subscribeNext:^(UITapGestureRecognizer *tap) {
+        @strongify(self);
+        NSIndexPath *path = [self.collectionView
+                             indexPathForCell:cell];
+        [self execute:path.row];
+    }];
+
     return cell;
 }
-
-
 
 @end

@@ -17,32 +17,79 @@
 
 @implementation AKAMeetupRequestManager
 
-- (id) init {
+- (id)initWithKeyProvider:(AKAMeetupAPIKeyProvider *)keyProvider
+{
     self = [super initWithBaseURL:[NSURL URLWithString:@"https://api.meetup.com/2/"]];
-    if(self) {
+
+    if (self) {
         self.responseSerializer = [AFJSONResponseSerializer serializer];
-        self.keyProvider = [[AKAMeetupAPIKeyProvider alloc] init];
+        self.keyProvider = keyProvider;
     }
+
     return self;
 }
 
-- (AFHTTPRequestOperation *)requestEventsForMeetupId:(NSString *)meetupId
-                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+- (RACSignal *)meetupsSignalWithID:(NSString *)meetupId
 {
+    RACSignal *s = [RACSignal createSignal:^RACDisposable *(id < RACSubscriber > subscriber) {
+        [self requestEventsForMeetupId:meetupId
+                               success:^(AFHTTPRequestOperation *operation, NSDictionary *response) {
+            [subscriber sendNext:response[@"results"]];
+            [subscriber sendCompleted];
+        }
 
-    NSDictionary *params = @{@"group_id":meetupId, @"key":self.keyProvider.meetupAPIKey, /*@"time":@"1m",*/ @"status":@"past,upcoming", @"rsvp":@"yes"/*@"page":@(25)*/};
+                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            if (operation.response.statusCode == 401) {
+                self.keyProvider.apiKey = nil;
+            }
+
+            [subscriber sendError:error];
+        }];
+        return nil;
+    }];
+
+    return s;
+}
+
+- (AFHTTPRequestOperation *)requestEventsForMeetupId:(NSString *)meetupId
+    success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    NSDictionary *params = @{ @"group_id": meetupId,
+                              @"key": self.keyProvider.meetupAPIKey,
+                              @"time": @"-8m,1m",
+                              @"status": @"past,upcoming"
+                              /*@"page":@(25)*/ };
     AFHTTPRequestOperation *operation = [self GET:@"events" parameters:params success:success failure:failure];
+
     return operation;
 }
 
-- (AFHTTPRequestOperation *)requestRSVPsForEventId:(NSString *)eventId
-                                             success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                                             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+- (RACSignal *)rsvpsSignalWithID:(NSString *)eventId
 {
-    
-    NSDictionary *params = @{@"event_id":eventId, @"key":self.keyProvider.meetupAPIKey, @"page:":@(50), @"rsvp":@"yes"};
+    @weakify(self);
+    return [RACSignal createSignal:^RACDisposable *(id < RACSubscriber > subscriber) {
+        @strongify(self);
+        [self requestRSVPsForEventId:eventId
+                             success:^(AFHTTPRequestOperation *operation, NSDictionary *response) {
+            [subscriber sendNext:response[@"results"]];
+            [subscriber sendCompleted];
+        }
+
+                             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [subscriber sendError:error];
+        }];
+        return nil;
+    }];
+}
+
+- (AFHTTPRequestOperation *)requestRSVPsForEventId:(NSString *)eventId
+    success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    NSDictionary *params = @{ @"event_id": eventId, @"key": self.keyProvider.meetupAPIKey, @"page:": @(50), @"rsvp": @"yes" };
     AFHTTPRequestOperation *operation = [self GET:@"rsvps" parameters:params success:success failure:failure];
+
     return operation;
 }
 
